@@ -23,6 +23,8 @@ type TreatedImageProps = {
    * a height. Default false keeps the intrinsic-ratio inline-block behaviour.
    */
   fill?: boolean;
+  /** native lazy-loading for below-the-fold placements */
+  loading?: "lazy" | "eager";
   className?: string;
 };
 
@@ -33,6 +35,7 @@ export function TreatedImage({
   shadow,
   highlight,
   fill = false,
+  loading,
   className = "",
 }: TreatedImageProps) {
   const style = {
@@ -45,7 +48,7 @@ export function TreatedImage({
       style={style}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} />
+      <img src={src} alt={alt} loading={loading} />
     </span>
   );
 }

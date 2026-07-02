@@ -53,6 +53,8 @@ If Tailwind ever misses classes used inside the library, add
 | `TreatedImage` | Photo → duotone/halftone in the project palette (`fill` = cover) | seed |
 | `Video` | Self-playing muted background/inline video, reduced-motion → poster | 2026-07 |
 | `Scrollytelling` | Sticky visual stepped by scroll progress, static fallback | 2026-07 |
+| `Timeline` | Vertical dated sequence (CV, history) with accent dots on a rule | 2026-07 |
+| `IndexList` | Numbered index (roman/arabic) for service/practice lists, ruled rows | 2026-07 |
 
 Treatments (`treatments/*.css`): `.dl-sketch-frame`, `.dl-treated-duotone`,
 `.dl-treated-halftone`, `.dl-treated-fill`, `.dl-grain`. Tokens:

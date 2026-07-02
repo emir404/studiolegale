@@ -1,0 +1,321 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../design-library/index.css";
+@source "../design-library";
+
+/* ============================================================
+ * shadcn token bridge (from design-library/shadcn-tokens.css)
+ * ============================================================ */
+
+:root {
+  --radius: var(--dl-radius-md);
+
+  /* surfaces */
+  --background: var(--dl-paper);
+  --foreground: var(--dl-ink);
+  --card: var(--dl-paper);
+  --card-foreground: var(--dl-ink);
+  --popover: var(--dl-paper);
+  --popover-foreground: var(--dl-ink);
+
+  /* brand */
+  --primary: var(--dl-accent);
+  --primary-foreground: var(--dl-paper);
+  --secondary: var(--dl-paper-soft);
+  --secondary-foreground: var(--dl-ink);
+  --muted: var(--dl-paper-soft);
+  --muted-foreground: var(--dl-ink-soft);
+  --accent: var(--dl-paper-soft);
+  --accent-foreground: var(--dl-ink);
+
+  /* state */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--dl-paper);
+
+  /* lines & focus — derived from ink so they track the client palette */
+  --border: color-mix(in oklab, var(--dl-ink) 12%, transparent);
+  --input: color-mix(in oklab, var(--dl-ink) 14%, transparent);
+  --ring: var(--dl-accent);
+
+  /* charts */
+  --chart-1: var(--dl-accent);
+  --chart-2: color-mix(in oklab, var(--dl-accent) 70%, var(--dl-ink));
+  --chart-3: color-mix(in oklab, var(--dl-accent) 40%, var(--dl-paper));
+  --chart-4: color-mix(in oklab, var(--dl-ink) 65%, var(--dl-paper));
+  --chart-5: var(--dl-ink-soft);
+
+  /* sidebar */
+  --sidebar: var(--dl-paper-soft);
+  --sidebar-foreground: var(--dl-ink);
+  --sidebar-primary: var(--dl-accent);
+  --sidebar-primary-foreground: var(--dl-paper);
+  --sidebar-accent: var(--dl-paper);
+  --sidebar-accent-foreground: var(--dl-ink);
+  --sidebar-border: color-mix(in oklab, var(--dl-ink) 12%, transparent);
+  --sidebar-ring: var(--dl-accent);
+}
+
+.dark {
+  --background: var(--dl-ink);
+  --foreground: var(--dl-paper);
+  --card: color-mix(in oklab, var(--dl-ink) 92%, var(--dl-paper));
+  --card-foreground: var(--dl-paper);
+  --popover: var(--dl-ink);
+  --popover-foreground: var(--dl-paper);
+  --primary: var(--dl-accent);
+  --primary-foreground: var(--dl-paper);
+  --secondary: color-mix(in oklab, var(--dl-ink) 85%, var(--dl-paper));
+  --secondary-foreground: var(--dl-paper);
+  --muted: color-mix(in oklab, var(--dl-ink) 85%, var(--dl-paper));
+  --muted-foreground: color-mix(in oklab, var(--dl-paper) 70%, var(--dl-ink));
+  --accent: color-mix(in oklab, var(--dl-ink) 80%, var(--dl-paper));
+  --accent-foreground: var(--dl-paper);
+  --border: color-mix(in oklab, var(--dl-paper) 12%, transparent);
+  --input: color-mix(in oklab, var(--dl-paper) 16%, transparent);
+  --ring: var(--dl-accent);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--dl-font-body, ui-sans-serif, system-ui, sans-serif);
+  --font-display: var(--dl-font-display, var(--font-sans));
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* ============================================================
+ * Studio Legale Lo Munno — client tokens
+ * Palette from DESIGN.md (pale-blue washes, royal-blue #244ECC)
+ * refined per FEEL.md: deep navy ink, ice-blue paper, brass accent
+ * taken from the real door plaque (Targa_Studio.jpg).
+ * ============================================================ */
+
+:root {
+  --dl-ink: #16253f;
+  --dl-ink-soft: #4d5d78;
+  --dl-paper: #f5fafc;
+  --dl-paper-soft: #e2eff2;
+  --dl-accent: #8a6b26;
+
+  /* brass material scale — the plaque, made into tokens */
+  --brass-light: #d9bd7d;
+  --brass: #c0a054;
+  --brass-deep: #8a6b26;
+  --brass-engrave: #46370f;
+
+  /* the original site's royal blue, kept as a quiet homage */
+  --royal: #244ecc;
+
+  --dl-radius-sm: 3px;
+  --dl-radius-md: 6px;
+  --dl-radius-lg: 14px;
+
+  --dl-font-body: var(--font-libre-franklin), ui-sans-serif, system-ui, sans-serif;
+  --dl-font-display: var(--font-cormorant), Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  body {
+    font-family: var(--dl-font-body);
+  }
+  a, button {
+    touch-action: manipulation;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--dl-font-display);
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ============================================================
+ * Client treatment layer — the engraved-plaque design language
+ * ============================================================ */
+
+@layer components {
+  /* Display serif in engraved-plaque caps: the site's voice */
+  .targa-caps {
+    font-family: var(--dl-font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+
+  /* Engraved type on the navy ground: brass fill with a chiselled edge */
+  .engraved-brass {
+    color: transparent;
+    background: linear-gradient(
+      170deg,
+      var(--brass-light) 0%,
+      var(--brass) 38%,
+      var(--brass-deep) 78%,
+      var(--brass) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.55))
+      drop-shadow(0 -1px 0 rgba(255, 244, 214, 0.12));
+  }
+
+  /* Small brass plate — section eyebrows as little "targhe" */
+  .targhetta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.42em 1em;
+    border-radius: var(--dl-radius-sm);
+    background: linear-gradient(165deg, var(--brass-light), var(--brass) 55%, var(--brass-deep));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 248, 224, 0.55),
+      inset 0 -1px 1px rgba(70, 55, 15, 0.45),
+      0 1px 2px rgba(22, 37, 63, 0.25);
+    color: var(--brass-engrave);
+    text-shadow: 0 1px 0 rgba(255, 248, 224, 0.4);
+    font-family: var(--dl-font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.8rem;
+  }
+  .targhetta::before,
+  .targhetta::after {
+    content: "";
+    width: 0.32em;
+    height: 0.32em;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 35% 30%, #efe3c2, var(--brass-deep) 70%);
+    box-shadow: inset 0 0 1px rgba(70, 55, 15, 0.8);
+    flex: none;
+  }
+
+  /* Corner screws for framed plates */
+  .screw {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 35% 30%, #e8d8ab, var(--brass) 45%, var(--brass-deep) 90%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 1px rgba(70, 55, 15, 0.9);
+  }
+  .screw::after {
+    content: "";
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: calc(50% - 0.5px);
+    height: 1px;
+    background: rgba(70, 55, 15, 0.75);
+    transform: rotate(38deg);
+  }
+
+  /* Double brass rule — the frame of the monumental plaque */
+  .brass-frame {
+    position: absolute;
+    inset: 1.25rem;
+    pointer-events: none;
+    border: 1px solid color-mix(in oklab, var(--brass) 55%, transparent);
+    border-radius: var(--dl-radius-md);
+  }
+  .brass-frame::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid color-mix(in oklab, var(--brass) 30%, transparent);
+    border-radius: calc(var(--dl-radius-md) - 3px);
+  }
+  @media (min-width: 640px) {
+    .brass-frame { inset: 2rem; }
+  }
+
+  /* Entrance rise — staggered, reduced-motion safe */
+  .rise {
+    animation: dl-rise 0.7s var(--dl-ease-out) both;
+  }
+  .rise-2 { animation-delay: 120ms; }
+  .rise-3 { animation-delay: 240ms; }
+  .rise-4 { animation-delay: 360ms; }
+  .rise-5 { animation-delay: 480ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .rise { animation: none; }
+  }
+
+  /* Marker highlight in brass — for the manifesto's key phrases */
+  .marker-brass {
+    background: linear-gradient(
+      120deg,
+      transparent 0 4%,
+      color-mix(in oklab, var(--brass-light) 55%, transparent) 4% 96%,
+      transparent 96%
+    );
+    background-size: 100% 0.5em;
+    background-repeat: no-repeat;
+    background-position: 0 82%;
+    padding-inline: 0.08em;
+  }
+}
+
+@keyframes dl-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -11,8 +11,11 @@ next-env.d.ts
 # misc
 .DS_Store
 *.log
+*.pem
 .env*
 !.env.example
+.vercel
+coverage/
 
 # saved conversation transcripts — raw, may contain secrets; keep local
 conversations/*
