@@ -1,0 +1,149 @@
+/*
+ * shadcn token bridge — the single reason shadcnblocks blocks come out looking
+ * like OURS instead of like stock shadcn.
+ *
+ * shadcnblocks/shadcn blocks are styled entirely through shadcn's theme
+ * variables (--primary, --background, --radius, ...) and their Tailwind
+ * utilities (bg-background, text-muted-foreground, rounded-lg). This file
+ * points every one of those variables at OUR design tokens (--dl-*, which in
+ * turn carry the client's palette from clients/<domain>/DESIGN.md). Set the
+ * --dl-* values once and every block re-skins automatically.
+ *
+ * /create copies this into app/globals.css. Order in globals.css:
+ *   @import "tailwindcss";
+ *   @import "tw-animate-css";
+ *   @import "../design-library/index.css";   // defines --dl-* + treatments
+ *   ...this bridge...
+ *
+ * Only touch the --dl-* values (in design-library/tokens.css, overridden per
+ * client). Leave the shadcn mappings below alone unless a block needs a token
+ * that isn't wired yet.
+ */
+
+:root {
+  --radius: var(--dl-radius-md);
+
+  /* surfaces */
+  --background: var(--dl-paper);
+  --foreground: var(--dl-ink);
+  --card: var(--dl-paper);
+  --card-foreground: var(--dl-ink);
+  --popover: var(--dl-paper);
+  --popover-foreground: var(--dl-ink);
+
+  /* brand */
+  --primary: var(--dl-accent);
+  --primary-foreground: var(--dl-paper);
+  --secondary: var(--dl-paper-soft);
+  --secondary-foreground: var(--dl-ink);
+  --muted: var(--dl-paper-soft);
+  --muted-foreground: var(--dl-ink-soft);
+  --accent: var(--dl-paper-soft);
+  --accent-foreground: var(--dl-ink);
+
+  /* state */
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: var(--dl-paper);
+
+  /* lines & focus — derived from ink so they track the client palette */
+  --border: color-mix(in oklab, var(--dl-ink) 12%, transparent);
+  --input: color-mix(in oklab, var(--dl-ink) 14%, transparent);
+  --ring: var(--dl-accent);
+
+  /* charts — spread around the accent; override per client if they chart data */
+  --chart-1: var(--dl-accent);
+  --chart-2: color-mix(in oklab, var(--dl-accent) 70%, var(--dl-ink));
+  --chart-3: color-mix(in oklab, var(--dl-accent) 40%, var(--dl-paper));
+  --chart-4: color-mix(in oklab, var(--dl-ink) 65%, var(--dl-paper));
+  --chart-5: var(--dl-ink-soft);
+
+  /* sidebar (dashboard blocks) */
+  --sidebar: var(--dl-paper-soft);
+  --sidebar-foreground: var(--dl-ink);
+  --sidebar-primary: var(--dl-accent);
+  --sidebar-primary-foreground: var(--dl-paper);
+  --sidebar-accent: var(--dl-paper);
+  --sidebar-accent-foreground: var(--dl-ink);
+  --sidebar-border: color-mix(in oklab, var(--dl-ink) 12%, transparent);
+  --sidebar-ring: var(--dl-accent);
+}
+
+/* Optional dark theme. Fill from DESIGN.md if the client has one; otherwise
+   flip paper/ink so blocks with a dark section still read correctly. */
+.dark {
+  --background: var(--dl-ink);
+  --foreground: var(--dl-paper);
+  --card: color-mix(in oklab, var(--dl-ink) 92%, var(--dl-paper));
+  --card-foreground: var(--dl-paper);
+  --popover: var(--dl-ink);
+  --popover-foreground: var(--dl-paper);
+  --primary: var(--dl-accent);
+  --primary-foreground: var(--dl-paper);
+  --secondary: color-mix(in oklab, var(--dl-ink) 85%, var(--dl-paper));
+  --secondary-foreground: var(--dl-paper);
+  --muted: color-mix(in oklab, var(--dl-ink) 85%, var(--dl-paper));
+  --muted-foreground: color-mix(in oklab, var(--dl-paper) 70%, var(--dl-ink));
+  --accent: color-mix(in oklab, var(--dl-ink) 80%, var(--dl-paper));
+  --accent-foreground: var(--dl-paper);
+  --border: color-mix(in oklab, var(--dl-paper) 12%, transparent);
+  --input: color-mix(in oklab, var(--dl-paper) 16%, transparent);
+  --ring: var(--dl-accent);
+}
+
+/* Expose the variables to Tailwind v4 utilities (bg-background, text-primary,
+   rounded-lg, border-border, ...). This is what block classes resolve against. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* type — point shadcn's font utilities at the client fonts /create loads */
+  --font-sans: var(--dl-font-body, ui-sans-serif, system-ui, sans-serif);
+  --font-display: var(--dl-font-display, var(--font-sans));
+
+  /* radius scale blocks use (rounded-sm ... rounded-xl) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}

@@ -1,0 +1,69 @@
+/*
+ * Photo treatments — pairs with components/TreatedImage.tsx.
+ * Duotone recipe: container background = shadow color; grayscale image with
+ * screen blend lifts shadows to that color; the ::after highlight layer
+ * multiplies the highlights down to the second color.
+ *
+ * Element-targeting rules live in the `components` cascade layer so a
+ * per-instance Tailwind utility (e.g. `h-full`, `object-cover`) on a `.dl-*`
+ * element wins — layered rules always lose to utilities regardless of
+ * specificity. See index.css for the layer-order pin.
+ */
+
+@layer components {
+  .dl-treated {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .dl-treated img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* fill — cover a fixed-height parent (cards, grid cells) instead of sizing
+     to the image's intrinsic ratio. Pairs with TreatedImage `fill`. Declared
+     after the base rule so it wins at equal specificity. */
+  .dl-treated-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .dl-treated-fill img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* duotone */
+  .dl-treated-duotone { background: var(--dl-duo-shadow, var(--dl-ink)); }
+  .dl-treated-duotone img {
+    filter: grayscale(1) contrast(1.15);
+    mix-blend-mode: screen;
+  }
+  .dl-treated-duotone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--dl-duo-highlight, var(--dl-accent));
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  /* halftone — print-like dot matrix over a punchy grayscale base */
+  .dl-treated-halftone img { filter: grayscale(1) contrast(1.3) brightness(1.05); }
+  .dl-treated-halftone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, var(--dl-duo-shadow, var(--dl-ink)) 1px, transparent 1.6px);
+    background-size: 7px 7px;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* none — plain container, keeps the same markup shape */
+  .dl-treated-none img { filter: none; }
+}

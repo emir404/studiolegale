@@ -1,0 +1,77 @@
+/*
+ * Nutz.inc design library — base tokens.
+ * Neutral scale only: the client's palette and typefaces get layered per
+ * project in app/globals.css (see the /create skill). Everything here is
+ * prefixed --dl- / .dl- so it never collides with app styles.
+ */
+
+:root {
+  /* color — placeholder neutrals, overridden per client */
+  --dl-ink: #16140f;
+  --dl-ink-soft: #57534a;
+  --dl-paper: #faf8f3;
+  --dl-paper-soft: #f0ede5;
+  --dl-accent: #2f54eb; /* always replace with the client's true accent */
+
+  /* type families — set per client from DESIGN.md (next/font exposes vars) */
+  --dl-font-body: ui-sans-serif, system-ui, sans-serif;
+  --dl-font-display: var(--dl-font-body);
+
+  /* type scale */
+  --dl-text-sm: 0.875rem;
+  --dl-text-base: 1.0625rem;
+  --dl-text-lg: 1.25rem;
+  --dl-text-xl: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
+  --dl-text-display: clamp(2.5rem, 1.6rem + 4.5vw, 5.5rem);
+
+  /* radius */
+  --dl-radius-sm: 4px;
+  --dl-radius-md: 10px;
+  --dl-radius-lg: 24px;
+
+  /* motion */
+  --dl-dur-fast: 160ms;
+  --dl-dur-slow: 480ms;
+  --dl-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---- typography helper ---- */
+
+.dl-prose {
+  max-width: 65ch;
+  font-size: var(--dl-text-base);
+  line-height: 1.65;
+  color: var(--dl-ink);
+}
+.dl-prose p + p { margin-top: 1em; }
+.dl-prose h3 { margin-top: 1.8em; font-size: var(--dl-text-lg); font-weight: 600; }
+.dl-prose ul { margin-top: 1em; padding-left: 1.2em; list-style: disc; }
+.dl-prose a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- marquee (used by components/Marquee.tsx) ---- */
+
+.dl-marquee {
+  display: flex;
+  overflow: hidden;
+  gap: var(--dl-marquee-gap, 3rem);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.dl-marquee-track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--dl-marquee-gap, 3rem);
+  min-width: 100%;
+  animation: dl-marquee var(--dl-marquee-duration, 30s) linear infinite;
+}
+.dl-marquee:hover .dl-marquee-track { animation-play-state: paused; }
+@keyframes dl-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--dl-marquee-gap, 3rem))); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dl-marquee { overflow-x: auto; }
+  .dl-marquee-track { animation: none; }
+}

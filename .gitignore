@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+# misc
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# saved conversation transcripts — raw, may contain secrets; keep local
+conversations/*
+!conversations/README.md
+prev-conversations/

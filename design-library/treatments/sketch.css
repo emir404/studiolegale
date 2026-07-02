@@ -1,0 +1,29 @@
+/*
+ * Hand-drawn treatment — pairs with components/SketchPortrait.tsx, which
+ * supplies the SVG filter (#dl-sketch-light / #dl-sketch-strong).
+ * .dl-sketch-frame gives the wonky "drawn border" via asymmetric radii.
+ *
+ * In the `components` layer so per-instance utilities win over these element
+ * rules (see index.css for the layer-order pin).
+ */
+
+@layer components {
+  .dl-sketch {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+  .dl-sketch-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .dl-sketch-frame {
+    border: 2px solid var(--dl-ink);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    padding: 4px;
+    background: var(--dl-paper);
+    transform: rotate(-0.6deg);
+  }
+  .dl-sketch-frame:nth-child(even) { transform: rotate(0.8deg); }
+}

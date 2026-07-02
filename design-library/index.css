@@ -1,0 +1,17 @@
+/* Single entry point — import this once from the app's globals.css:
+ *   @import "tailwindcss";
+ *   @import "../design-library/index.css";   (tailwindcss FIRST)
+ *
+ * Layer-order pin: restate Tailwind's canonical order so the library's
+ * element-targeting rules (in `components`, see treatments/*.css) always sit
+ * below `utilities`. A per-instance utility (`h-full`, `object-cover`,
+ * `absolute`) on a `.dl-*` element then wins. Restating the exact Tailwind
+ * order is a no-op for Tailwind but makes precedence deterministic even if the
+ * library is imported before `tailwindcss`. This statement form is valid
+ * before `@import`. */
+@layer theme, base, components, utilities;
+
+@import "./tokens/tokens.css";
+@import "./treatments/sketch.css";
+@import "./treatments/duotone.css";
+@import "./treatments/grain.css";
